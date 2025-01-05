@@ -11,5 +11,3 @@ eagleConvert.convertSinglePartToEagle("C44598", savePartData=True, saveMetaDict=
 #C191873 Shift Register
 #C2829973 G-Switch GT-USB-7055A
 #C7545661 XINGLIGHT XL-DZ304UYD/4
-
-#Need to make eclipse pads for C7545661 XINGLIGHT XL-DZ304UYD/4
