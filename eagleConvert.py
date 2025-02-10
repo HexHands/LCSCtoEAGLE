@@ -13,11 +13,11 @@ isSymbol = True #Default
 def theoryUnitsToMillimeters(units):
     global isSymbol
     if isSymbol:
-        return units
+        return units * 0.254
     if unit == "mm":
         return round((units / 10) * 0.128, 2)
     elif unit == "mil":
-        return round(units * 0.0254, 2)
+        return round((units * 0.0254) * 2, 2)
     else:
         print(f"Unknown Unit: {unit}")
         return round((units / 10) * 0.128, 2) #mm Units Default
