@@ -385,7 +385,7 @@ def convertPhrasedToXML(phrasedData, editData, partNumb, metaData):
                         vertexList.remove("L")
                     except:
                         pass
-                    if len(vertexList) == 4 :
+                    if len(vertexList) == 4:
                         useLayer = theoryLayerToEagleLayer(useLayer)
                         if useLayer == -1:
                             print(f"Unknown useLayer FILL (list): {useLayer}")
@@ -404,10 +404,13 @@ def convertPhrasedToXML(phrasedData, editData, partNumb, metaData):
                             useLayer = 49 #Reference Layer
                         elif useLayer == 12:
                             useLayer = 21
-                        
+
                         i = 0
                         usageType = "L"
                         while i < len(vertexList):
+                            if partNumb == 'C105420':
+                                pass
+                                print(vertexList[i])
                             if vertexList[i] == "L":
                                 usageType = "L"
                                 i += 1
@@ -424,12 +427,16 @@ def convertPhrasedToXML(phrasedData, editData, partNumb, metaData):
                                     })
                                     i += 2
                                 elif usageType == "ARC":
+                                    print(vertexList[i + 1])
+                                    print(vertexList[i + 2])
+                                    print(vertexList[i])
                                     vertexData.append({
                                         "@x": theoryUnitsToMillimeters(vertexList[i + 1]),
                                         "@y": theoryUnitsToMillimeters(vertexList[i + 2]),
                                         "@curve": vertexList[i]
                                     })
                                     i += 3
+                                    usageType = "L"
                                 else:
                                     print(f"Unknown usageType FILL (list): {usageType}")
 
@@ -709,12 +716,15 @@ def createXML(partDataList, saveMetaDict=False):
                     metaDict[partNumb]["FOOTPRINT"]["PADS"].remove(pad)
                     connectPad.append(pad)
             
-            print(f"CONNECTING PINS {connectPin} WITH PADS {connectPad}")
-            componentDict["devices"]["device"]["connects"]["connect"].append({
-                "@gate": partNumb,
-                "@pin": " ".join(connectPin),
-                "@pad": " ".join(connectPad)
-            })
+            if len(connectPin) > 0 and len(connectPad) > 0:
+                print(f"CONNECTING PINS {connectPin} WITH PADS {connectPad}")
+                componentDict["devices"]["device"]["connects"]["connect"].append({
+                    "@gate": partNumb,
+                    "@pin": " ".join(connectPin),
+                    "@pad": " ".join(connectPad)
+                })
+            else:
+                print(f"CONNECT TERMINATED FOR PINS {connectPin} WITH PADS {connectPad}")
         xmlContent["eagle"]["drawing"]["library"]["devicesets"]["deviceset"].append(componentDict)
 
         print(f"##### Finished Creating XML for Part {partName} #####")
