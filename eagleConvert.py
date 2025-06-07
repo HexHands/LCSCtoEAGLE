@@ -15,7 +15,7 @@ def theoryUnitsToMillimeters(units):
     if isSymbol:
         return units * 0.254
     if unit == "mm":
-        return round((units / 10) * 0.128, 2)
+        return round(((units / 10) * 0.128) * 2, 2)
     elif unit == "mil":
         return round((units * 0.0254) * 2, 2)
     else:
